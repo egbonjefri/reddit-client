@@ -10,9 +10,9 @@ import {
 } from './features/counter/counterSlice';
 function App() {
   const link = useSelector((state)=>state.counter.link);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line 
   const search = useSelector((state)=>state.counter.searchPage);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line 
   const [searchParams, setSearchParams] = useSearchParams();
   let navigate = useNavigate();
   const dispatch = useDispatch()
