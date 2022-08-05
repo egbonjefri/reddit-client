@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
    nameAdder, resetter, postAdder,linkAdder
 } from './features/counter/counterSlice';
+import { untoggle } from './App';
 import './materialize.css'
 const Loading = ({ type, color }) => (
-  <ReactLoading type={'cylon'} color={'black'} />
+  <ReactLoading type={'cylon'} color={'grey'} />
 );
 
 function htmlDecode(input) {
@@ -122,6 +123,8 @@ function handleScroll () {
               })
               
           }
+                  <div onClick={()=>untoggle()} className='cover'></div>
+
     </div>
   );
 }

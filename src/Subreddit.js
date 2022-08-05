@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {commentAdder} from './features/counter/counterSlice';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import { untoggle } from './App';
 
 
 export default function Subreddit() {
@@ -191,6 +191,7 @@ export default function Subreddit() {
             })
 
 }
+<div onClick={()=>untoggle()} className='cover'></div>
 </div>
     )
 }

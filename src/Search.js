@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import React, { useState, useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
 import { searchF, valueSetter, subber, resetter, searchNav, linkAdder } from './features/counter/counterSlice';
-
+import { untoggle } from './App';
 const Loading = ({ type, color }) => (
-    <ReactLoading type={'spin'} color={'black'} />
+    <ReactLoading type={'spin'} color={'grey'} />
   );
 function htmlDecode(input) {
     let doc = new DOMParser().parseFromString(input, "text/html");
@@ -103,6 +103,7 @@ useEffect(()=> {
           })
           
       }
+       <div onClick={()=>untoggle()} className='cover'></div>
             </div>
     )
 }
