@@ -1,12 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import ReactLoading from 'react-loading'
 import {commentAdder} from './features/counter/counterSlice';
-
-const Loading = ({ type, color }) => (
-    <ReactLoading type={'cylon'} color={'black'} />
-  );
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 
@@ -18,7 +15,10 @@ export default function Subreddit() {
     const value = useSelector((state)=>state.counter.value);
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
-  
+    function htmlDecode(input) {
+      let doc = new DOMParser().parseFromString(input, "text/html");
+      return doc.documentElement.textContent
+    }
     useEffect(()=> {
         setTimeout(()=> {
       const loadPost =  async () => {
@@ -44,8 +44,33 @@ export default function Subreddit() {
     return (
         <div>
         {loading ? (
-            <div className='loading'>
-            <Loading />
+                    <div className="post">
+                    <div className="left-col">
+                        <div className="avatar">
+            <Skeleton
+                count={3}
+                height="100%"
+              containerClassName="avatar-skeleton"
+                        />
+    
+                        </div>
+                        <div className="new">
+            <Skeleton
+                count={3}
+                height="100%"
+              containerClassName="avatar-skeleton"
+                        />
+    
+                        </div>
+                        <div className="other">
+            <Skeleton
+                count={3}
+                height="100%"
+              containerClassName="avatar-skeleton"
+                        />
+    
+                        </div>
+                        </div>
             </div>) :
             title.map((item)=> {
                 let unix_timeStamp = item.data.created;
@@ -67,8 +92,14 @@ export default function Subreddit() {
                         <span> |</span>
                         <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
                         </p>
-                        <h4>{item.data.title}</h4>
+                        <h5>{item.data.title}</h5>
                         <a target='_blank' rel="noreferrer" href={item.data.url} className='link'>{item.data.url}</a>
+                        { (item.data.media !== null && item.data.media.hasOwnProperty('reddit_video')) ? <video className='mobile-only' controls autoPlay>{<source src={`${item.data.secure_media.reddit_video.fallback_url}autoplay=1&muted=1`} />}</video> 
+            :
+            (typeof item.data.preview ==='object' && item.data.preview.hasOwnProperty('reddit_video_preview')) ? <video className='mobile-only' autoPlay controls>{<source src={`${item.data.preview.reddit_video_preview.fallback_url}`} type='video/mp4' />}</video>
+            :
+            (typeof item.data.preview ==='object')&& <img className='mobile-only' src={htmlDecode(item.data.preview.images[0].source.url)} alt={item.data.title} />
+           } 
                         </div>
                        {comments.map((item2)=>{
                 let timeStamp2 = item2.data.created;

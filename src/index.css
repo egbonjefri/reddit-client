@@ -7,7 +7,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: rgba(77, 77, 77, 0.144);
-
+  transition: 0.35s ease-in-out;
 }
 .loading {
   display: flex;
@@ -19,8 +19,11 @@ nav {
   background: white !important;
 }
 .brand-logo {
-  color: black !important;
+  color: black;
   margin-left: 1rem
+}
+h5 {
+  color: black
 }
 .post-cta {
   display: flex;
@@ -30,7 +33,7 @@ nav {
   flex-wrap: wrap;
 }
 .posts {
-  width: 50%;
+  width: 60rem;
   border: solid 1px black;
   box-shadow: 1px 2px 13px 3px rgba(0, 0, 0, 0.7);
   margin: 1rem auto;
@@ -38,13 +41,15 @@ nav {
   display: flex;
   border-radius: 0.75%;
   cursor: pointer;
+  overflow-x: scroll !important;
+  overflow-wrap: break-word !important;
 }
 .search{
   margin-right:5rem !important;
   width: 30%
 }
 input {
-  background-color: rgb(243, 243, 243) !important;
+  background-color: rgb(255, 255, 255) !important;
   padding: 0 1.8rem !important
 }
 
@@ -56,15 +61,16 @@ input {
 }
 img {
   display: block;
-  margin: 1rem auto;
-  width: 80%;
+  margin: 1rem 2rem;
+  width: 50rem;
   height: auto;
 }
 .divide {
   background: rgba(110, 110, 110, 0.164);
   display: block;
   margin: 0;
-  min-width: 2.65rem !important
+  min-width: 2.65rem !important;
+  font-size: 13px;
 }
 .posts .ups {
   margin-top: 2rem;
@@ -101,21 +107,21 @@ img {
   display: block;
   border-radius: 0.15%;
   padding: 0 1rem;
-  overflow-x: scroll;
-
+  overflow-wrap: break-word;
 }
 .post-title {
   width: 100%;
   border: solid 1px black;
   box-shadow: 0.5px 0.75px 0.5px #000000;
   margin: 0.5rem auto;
-  background: white;
+  overflow-wrap: break-word;
 }
 .back {
   background-color: white;
   width: 50%;
   margin: 0 auto;
-  display: block
+  display: block;
+
 }
 .post-replies {
   position: relative;
@@ -131,6 +137,7 @@ img {
   padding: 0 1rem;
  
 }
+
 .post-post {
   position: relative;
   border-left:solid 2px black;
@@ -158,18 +165,121 @@ img {
 }
 video {
   display: block !important;
-  margin: 0 auto !important;
-  max-width: 90%
+  margin: 1rem 2rem !important;
+  width: 50rem !important
 }
+.button-top {
+  z-index: 1000;
+  position: fixed;
+  right: 5%;
+  top: 90%;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border-radius: 5%;
+  box-shadow: 1px 1px 5px black;
+  transition: 0.35s ease-in-out;
+  width: 8rem;
+  height: 2.5rem;
+  display: none
+}
+.mobile-only {
+  display: none
+}
+.button-top:hover {
+  text-decoration: underline;
+  color: #000000;
+  background-color: white;
+}
+.post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post .left-col {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.post .avatar {
+  width: 50rem;
+  height: 3rem;
+  background-color: #000000;
+  border-radius: 50%;
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+.post .new {
+  width: 50rem;
+  height: 7rem;
+  background-color: #000000;
+  border-radius: 50%;
+  display: flex;
+  margin-top: 8rem;
+  align-items: center;
+  justify-content: center;
+}
+.post .other {
+  width: 50rem;
+  height: 7rem;
+  background-color: #000000;
+  border-radius: 50%;
+  display: flex;
+  margin-top: 16rem;
+  align-items: center;
+  justify-content: center;
+}
+.post .avatar-skeleton {
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+}
+.switch {
+  position: absolute;
+  right: 50%
+}
+.switch.whit label .lever {
+  background-color: black;
+}
+.switch .whit label input[type=checkbox]:checked+.lever {
+  background-color: black;
+}
+.switch .whit label input[type=checkbox]:checked+.lever:after {
+  background-color: black;
+}
+.dark-mode {
+  position: absolute;
+  margin-left: -1rem;
+  top: 0.15rem;
+}
+
 @media (max-width: 1024px) {
   .posts {
     width: 80%
   }
+  img {
+    width: 90%;
+    margin: 0 auto
+  }
+  video {
+    width: 90% !important;
+    margin: 0 auto !important
+  }
+ 
   .back {
     width: 80%
   }
 }
 @media (max-width: 460px) {
+  .mobile-only {
+    display: block
+  }
   .posts {
     width: 95%
   }
@@ -178,6 +288,16 @@ video {
   }
   .post-post {
     display: none
+  }
+  .divide {
+    font-size: 12px
+  }
+  #myBtn {
+    display: none !important
+  }
+
+  .switch {
+    display: none;
   }
 }
 @media(max-width: 300px) {

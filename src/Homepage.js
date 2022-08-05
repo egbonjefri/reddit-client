@@ -8,7 +8,7 @@ import {
 } from './features/counter/counterSlice';
 import './materialize.css'
 const Loading = ({ type, color }) => (
-  <ReactLoading type={'spin'} color={'black'} />
+  <ReactLoading type={'cylon'} color={'black'} />
 );
 
 function htmlDecode(input) {
@@ -19,7 +19,6 @@ function Homepage() {
   const [loading, setLoading] = useState(true);
   const blank = useSelector((state)=>state.counter.blank);
   const value = useSelector((state)=>state.counter.value);
-
 
   const postArray = useSelector((state)=>state.counter.posts);
   const navigate = useNavigate()
@@ -41,14 +40,33 @@ function Homepage() {
   }
     loadPost();
     setLoading(false)
-  }, 1000);
+  }, 2000);
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
+useEffect(()=> {
+  const element = document.getElementById('myBtn')
 
+  window.addEventListener('scroll', ()=>{
+    if(window.scrollY > 300) {
+      element.style.display = 'block';
+    }
+    else {
+      element.style.display = 'none';
+    }
+  }, true)
+},[])
+function handleScroll () {
+  window.scroll({
+    top: -2500, 
+    left: 0, 
+    behavior: 'smooth' 
+  });
+
+}
   return (
     <div>
-
+  <button onClick={()=>handleScroll()} id='myBtn' className='button-top'>Back to Top</button>
       {loading ? (
               <div className='loading'>
               <Loading />
@@ -76,9 +94,10 @@ function Homepage() {
                       <i className='arrow material-icons'>arrow_drop_down</i>
                       </div>
                 <div onClick={()=>{
-                       dispatch(nameAdder(item.data.id));
-                       dispatch(linkAdder(item.data.permalink));
-                       navigate(item.data.permalink, {replace: true});
+                      let str = item.data.permalink.normalize('NFD').replace(/\p{Diacritic}/gu, '')
+                      dispatch(nameAdder(item.data.id));
+                       dispatch(linkAdder(str));
+                       navigate(str, {replace: true});
                         }}  className='main'>
                     <span className='black-text' >
            <p className='center'>
@@ -93,7 +112,8 @@ function Homepage() {
             (typeof item.data.preview ==='object' && item.data.preview.hasOwnProperty('reddit_video_preview')) ? <video autoPlay controls>{<source src={`${item.data.preview.reddit_video_preview.fallback_url}`} type='video/mp4' />}</video>
             :
             (typeof item.data.preview ==='object')&& <img src={htmlDecode(item.data.preview.images[0].source.url)} alt={item.data.title} />
-           }                <p className='cmnt-p'><i className='comment material-icons'>comment</i><span>{item.data.num_comments} Comments</span></p>
+           }                
+           <p className='cmnt-p'><i className='comment material-icons'>comment</i><span>{item.data.num_comments} Comments</span></p>
                </span>
                 </div>
                 </div>
@@ -102,7 +122,6 @@ function Homepage() {
               })
               
           }
-                      
     </div>
   );
 }

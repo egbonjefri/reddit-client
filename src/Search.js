@@ -78,10 +78,11 @@ useEffect(()=> {
               <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
               </p>
               <div onClick={()=>{
-                let a = item.data.permalink.substr(1)
-                       dispatch(searchNav(a));
-                       dispatch(linkAdder(item.data.permalink));
-                        navigate(item.data.permalink)
+                let a = item.data.permalink.substr(1);
+                let str = item.data.permalink.normalize('NFD').replace(/\p{Diacritic}/gu, '')
+                dispatch(linkAdder(str));
+                navigate(str, {replace: true});
+                dispatch(searchNav(a));
                     }} >
             <h5>{item.data.title}</h5>
            { (item.data.media !== null && item.data.media.hasOwnProperty('reddit_video')) ? <video controls loop autoPlay>{<source src={`${item.data.secure_media.reddit_video.fallback_url}autoplay=1&muted=1`} />}</video> 
