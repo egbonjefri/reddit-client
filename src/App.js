@@ -12,13 +12,16 @@ let array1 = ['r/worldnews', 'r/mildlyinteresting', 'r/NatureIsFuckingLit',
 'r/science', 'r/AnimalsBeingJerks', 'r/Awwducational', 'r/funny', 'r/space',
 'r/woahdude', 'r/javascript'];
 export function untoggle () {
+
+
   const toggle = document.getElementsByClassName('toggle')[0];
   const menu = document.getElementsByClassName('menu')[0];
   const cover = document.getElementsByClassName('cover')[0];
   toggle.classList.remove('btn-active');
-  menu.classList.remove('menu-active');
-  menu.classList.remove('animate');
+   menu.classList.remove('menu-active');
+   menu.classList.remove('animate');
   cover.classList.remove('covering');
+
 }  
 function App() {
   const link = useSelector((state)=>state.counter.link);
@@ -60,7 +63,7 @@ function toggleBtn () {
   toggle.classList.toggle('btn-active');
   menu.classList.toggle('menu-active');
   menu.classList.add('animate');
-  cover.classList.toggle('covering');
+  cover.classList.add('covering');
 }
 
 
@@ -235,6 +238,8 @@ function toggleBtn () {
       <Route path={link} element={<Subreddit />} />
       <Route path={`/search/`} element={<Search />} />
            </Routes>  
+           <div onClick={()=>untoggle()} className='cover'></div>
+
     </div>
   );
 }

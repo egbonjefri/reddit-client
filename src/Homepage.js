@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
    nameAdder, resetter, postAdder,linkAdder
 } from './features/counter/counterSlice';
-import { untoggle } from './App';
 import './materialize.css'
 const Loading = ({ type, color }) => (
   <ReactLoading type={'cylon'} color={'grey'} />
@@ -18,21 +17,34 @@ function htmlDecode(input) {
 }
 function Homepage() {
   const [loading, setLoading] = useState(true);
+  const [text, setText] = useState('');
   const blank = useSelector((state)=>state.counter.blank);
   const value = useSelector((state)=>state.counter.value);
-
+  const [next, setNext] = useState(false);
+  const [truthy, setTruthy] = useState(false)
   const postArray = useSelector((state)=>state.counter.posts);
   const navigate = useNavigate()
   const dispatch = useDispatch();
   useEffect(()=> {
     setLoading(true)
     setTimeout(()=> {
+      
   const loadPost =  async () => {
-    if (value === '') {
-      const response = await axios.get(`https://www.reddit.com/r/canada.json`, { params: { limit: 100}})
-      dispatch(postAdder((response.data.data.children)));
-      dispatch(resetter())
+
+     if (value === '') {
+      if (truthy) {
+        const response = await axios.get(`https://www.reddit.com/r/canada.json`, { params: { after:text , limit: 100} })
+        dispatch(postAdder((response.data.data.children)));
+        dispatch(resetter());
+        setTruthy(false)
+      }
+      else {
+        const response = await axios.get(`https://www.reddit.com/r/canada.json`, { params: { limit: 100}})
+        dispatch(postAdder((response.data.data.children)));
+        setText(response.data.data.after)
+        dispatch(resetter())
     }
+  }
     else {
       const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { limit: 100}})
       dispatch(postAdder((response.data.data.children)));
@@ -43,7 +55,7 @@ function Homepage() {
     setLoading(false)
   }, 2000);
       // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  }, [value, next])
 
 useEffect(()=> {
   const element = document.getElementById('myBtn')
@@ -51,13 +63,19 @@ useEffect(()=> {
   window.addEventListener('scroll', ()=>{
     if(window.scrollY > 300) {
       element.style.display = 'block';
+      if (window.scrollY > 64800) {
+        setNext(true);
+        setTruthy(true)
+      }
     }
+  
     else {
       element.style.display = 'none';
     }
   }, true)
 },[])
 function handleScroll () {
+  setNext(false)
   window.scroll({
     top: -2500, 
     left: 0, 
@@ -80,11 +98,14 @@ function handleScroll () {
                 let y = now.getHours();
                 let dayDate = date.getDate();
                 let nowDate = now.getDate();
+                let nowMonth = now.getMonth();
+                let dateMonth = date.getMonth();
+                let c = nowMonth - dateMonth;
                 let z = nowDate - dayDate;
                 let minutes = date.getMinutes();
                 let x;
                 let a;                
-                z === 0 ? x = y - hours : z === 1 || z === -30 ? x = (24-hours) + y : a = (31-dayDate)+nowDate; 
+                z === 0 && c === 0 ? x = y - hours : z === 1 || z === -30 ? x = (24-hours) + y : a = (31-dayDate)+nowDate; 
                 return(
                     
                   <div className='post-cta' key={Number(item.data.created)}>
@@ -123,7 +144,6 @@ function handleScroll () {
               })
               
           }
-                  <div onClick={()=>untoggle()} className='cover'></div>
 
     </div>
   );

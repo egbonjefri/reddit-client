@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import React, { useState, useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
 import { searchF, valueSetter, subber, resetter, searchNav, linkAdder } from './features/counter/counterSlice';
-import { untoggle } from './App';
 const Loading = ({ type, color }) => (
     <ReactLoading type={'spin'} color={'grey'} />
   );
@@ -47,11 +46,14 @@ useEffect(()=> {
             let y = now.getHours();
             let dayDate = date.getDate();
             let nowDate = now.getDate();
+            let nowMonth = now.getMonth();
+            let dateMonth = date.getMonth();
+            let c = nowMonth - dateMonth;
             let z = nowDate - dayDate;
             let minutes = date.getMinutes();
             let x;
             let a;                
-            z === 0 ? x = y - hours : z === 1 || z === -30 ? x = (24-hours) + y : a = (31-dayDate)+nowDate; 
+            z === 0 && c === 0 ? x = y - hours : z === 1 || z === -30 ? x = (24-hours) + y : a = (31-dayDate)+nowDate; 
             return(
  
               <div key={Number(item.data.created)}>
@@ -103,7 +105,6 @@ useEffect(()=> {
           })
           
       }
-       <div onClick={()=>untoggle()} className='cover'></div>
             </div>
     )
 }

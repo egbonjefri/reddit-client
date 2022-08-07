@@ -343,7 +343,7 @@ opacity: 0;
 }
 
 .animate {
-    animation: slide-menu 0.5s linear forwards
+    animation: slide-menu 0.45s linear forwards
 }
 .menu-items {
   margin: 0 1rem;
@@ -388,7 +388,7 @@ opacity: 0;
 .mobile-search{
   position: relative;
   top: 3.75rem;
-  width: 94.8%;
+  width: 15.8rem;
   right: 6.5rem
 }
 .nav-wrapper {
