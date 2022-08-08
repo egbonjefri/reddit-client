@@ -1,12 +1,10 @@
-import Homepage from './Homepage'
-import Subreddit from './Subreddit'
-import Search from './Search'
+
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState} from 'react'
-import {NavLink, useSearchParams, useNavigate, Routes, Route} from 'react-router-dom';
-
+import {NavLink, useSearchParams, useNavigate} from 'react-router-dom';
+import ChangeOver from './ChangeOver'
 import {
-  valueSetter, subber, searchAdder,homepage
+ valueSetter, subber, searchAdder,homepage
 } from './features/counter/counterSlice';
 let array1 = ['r/worldnews', 'r/mildlyinteresting', 'r/NatureIsFuckingLit',
 'r/science', 'r/AnimalsBeingJerks', 'r/Awwducational', 'r/funny', 'r/space',
@@ -24,9 +22,8 @@ export function untoggle () {
 
 }  
 function App() {
-  const link = useSelector((state)=>state.counter.link);
+  let link = useSelector((state)=>state.counter.link);
   const comments = useSelector((state)=>state.counter.comments);
-
   // eslint-disable-next-line 
   const search = useSelector((state)=>state.counter.searchPage);
   // eslint-disable-next-line 
@@ -66,7 +63,12 @@ function toggleBtn () {
   cover.classList.add('covering');
 }
 
-
+useEffect(()=> {
+  if(link === '') {
+    navigate('/', {replace: true})
+  }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
  useEffect(()=> {
   untoggle()
   function handleChange() {
@@ -162,14 +164,8 @@ function toggleBtn () {
   handleChange();
  
 },[truthy, link, comments])
-  useEffect(()=> {
-    if (link === '') {
-     navigate('/')
-    }
-   
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
- 
+
+
   return (
     <div className="App">
               <nav>
@@ -233,11 +229,7 @@ function toggleBtn () {
           </form>
     </div>
   </nav>
-      <Routes>
-      <Route path='/' element={<Homepage />} />
-      <Route path={link} element={<Subreddit />} />
-      <Route path={`/search/`} element={<Search />} />
-           </Routes>  
+      <ChangeOver />
            <div onClick={()=>untoggle()} className='cover'></div>
 
     </div>

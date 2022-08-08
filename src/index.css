@@ -73,7 +73,7 @@ img {
   background: rgba(110, 110, 110, 0.164);
   display: block;
   margin: 0;
-  min-width: 2.65rem !important;
+  min-width: 3rem !important;
   font-size: 13px;
 }
 .posts .ups {
@@ -81,7 +81,7 @@ img {
   position: relative;
   text-justify: center;
   text-align: center;
-  padding-right: 0.5rem;
+  padding-right: 0.95rem;
 }
 .posts h5{
   margin: 1rem

@@ -50,10 +50,10 @@ useEffect(()=> {
             let dateMonth = date.getMonth();
             let c = nowMonth - dateMonth;
             let z = nowDate - dayDate;
-            let minutes = date.getMinutes();
+            let minutes = now.getMinutes() - date.getMinutes();
             let x;
             let a;                
-            z === 0 && c === 0 ? x = y - hours : z === 1 || z === -30 ? x = (24-hours) + y : a = (31-dayDate)+nowDate; 
+            z === 0 && c === 0 ? x = y - hours : (c===0 && z === 1 )|| z === -30 ? x = (24-hours) + y : a = (31-dayDate)+nowDate; 
             return(
  
               <div key={Number(item.data.created)}>

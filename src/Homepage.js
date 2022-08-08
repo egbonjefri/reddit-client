@@ -4,7 +4,7 @@ import axios from 'axios';
 import ReactLoading from 'react-loading'
 import { useSelector, useDispatch } from 'react-redux';
 import {
-   nameAdder, resetter, postAdder,linkAdder
+   searchNav, nameAdder, resetter, postAdder,linkAdder
 } from './features/counter/counterSlice';
 import './materialize.css'
 const Loading = ({ type, color }) => (
@@ -102,10 +102,10 @@ function handleScroll () {
                 let dateMonth = date.getMonth();
                 let c = nowMonth - dateMonth;
                 let z = nowDate - dayDate;
-                let minutes = date.getMinutes();
+                let minutes = now.getMinutes() - date.getMinutes();
                 let x;
                 let a;                
-                z === 0 && c === 0 ? x = y - hours : z === 1 || z === -30 ? x = (24-hours) + y : a = (31-dayDate)+nowDate; 
+                z === 0 && c === 0 ? x = y - hours : (c===0 && z === 1) || z === -30 ? x = (24-hours) + y : a = (31-dayDate)+nowDate; 
                 return(
                     
                   <div className='post-cta' key={Number(item.data.created)}>
@@ -117,8 +117,11 @@ function handleScroll () {
                       </div>
                 <div onClick={()=>{
                       let str = item.data.permalink.normalize('NFD').replace(/\p{Diacritic}/gu, '')
+                      let newStr = item.data.permalink.substr(1);
+
                       dispatch(nameAdder(item.data.id));
                        dispatch(linkAdder(str));
+                       dispatch(searchNav(newStr));
                        navigate(str, {replace: true});
                         }}  className='main'>
                     <span className='black-text' >
