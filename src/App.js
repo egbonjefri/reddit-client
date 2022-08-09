@@ -64,8 +64,9 @@ function toggleBtn () {
 }
 
 useEffect(()=> {
+  
   if(link === '') {
-    navigate('/', {replace: true})
+    navigate('/')
   }
         // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])

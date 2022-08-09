@@ -229,6 +229,16 @@ video {
   align-items: center;
   justify-content: center;
 }
+.post .new-other {
+  width: 50rem;
+  height: 7rem;
+  background-color: #000000;
+  border-radius: 50%;
+  display: flex;
+  margin-top: 16rem;
+  align-items: center;
+  justify-content: center;
+}
 .post .other {
   width: 50rem;
   height: 7rem;
@@ -281,6 +291,7 @@ video {
   }
 }
 @media (max-width: 460px) {
+ 
   .mobile-only {
     display: block
   }
@@ -294,7 +305,11 @@ video {
     display: none
   }
   .divide {
-    font-size: 12px
+    font-size: 10px;
+    min-width: 2.75rem !important
+  }
+  .posts .ups {
+    padding-right: 0.75rem !important
   }
   #myBtn {
     display: none !important

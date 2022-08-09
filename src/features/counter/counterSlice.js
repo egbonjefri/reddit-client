@@ -47,8 +47,13 @@ export const counterSlice = createSlice({
       state.link += action.payload;
     },
     commentAdder: (state, action) => {
+      try{
       state.comments = action.payload[1].data.children;
      state.title = action.payload[0].data.children;
+      }
+      catch (e){
+        console.log(e)
+      }
       },
     resetter: (state) => {
       state.link = '';
