@@ -57,16 +57,18 @@ function Homepage() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, next])
 
-useEffect(()=> {
-  const element = document.getElementById('myBtn')
 
+
+useEffect(()=> {
+  const element = document.getElementById('myBtn');
   window.addEventListener('scroll', ()=>{
+
+    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+      setNext(true);
+      setTruthy(true)
+    }
     if(window.scrollY > 300) {
       element.style.display = 'block';
-      if (window.scrollY > 64800) {
-        setNext(true);
-        setTruthy(true)
-      }
     }
   
     else {
@@ -74,6 +76,7 @@ useEffect(()=> {
     }
   }, true)
 },[])
+
 function handleScroll () {
   setNext(false)
   window.scroll({
@@ -105,7 +108,7 @@ function handleScroll () {
                 let minutes = now.getMinutes() - date.getMinutes();
                 let x;
                 let a;                
-                z === 0 && c === 0 ? x = y - hours : (c===0 && z === 1) || z === -30 ? x = (24-hours) + y : a = (31-dayDate)+nowDate; 
+                (z === 0 && c === 0) ? x = y - hours : (c===0 && z === 1) || z === -30 ? x = (24-hours) + y : (c===0) ? a = nowDate-dayDate : a = (31-dayDate)+nowDate; 
                 return(
                     
                   <div className='post-cta' key={Number(item.data.created)}>
@@ -138,7 +141,7 @@ function handleScroll () {
             :
             (typeof item.data.preview ==='object')&& <img src={htmlDecode(item.data.preview.images[0].source.url)} alt={item.data.title} />
            }                
-           <p className='cmnt-p'><i className='comment material-icons'>comment</i><span>{item.data.num_comments} Comments</span></p>
+            <p className='cmnt-p'><i className='comment material-icons'>comment</i>{item.data.num_comments === 1 ? <span>{item.data.num_comments} Comment</span> :<span>{item.data.num_comments} Comments</span>}</p>
                </span>
                 </div>
                 </div>
