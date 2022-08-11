@@ -110,7 +110,7 @@ export default function Subreddit() {
                         <div className='center post-title'>
                         <p>Posted by <b>{item.data.author}</b>
                         <span> |</span>
-                        <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
+                        <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0&&minutes===1) ? '1 minute ago' : (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
                         </p>
                         <h5>{item.data.title}</h5>
                         <a target='_blank' rel="noreferrer" href={item.data.url} className='link'>{item.data.url}</a>
@@ -138,7 +138,7 @@ export default function Subreddit() {
                                <div key={item2.data.created+item2.data.score+random2}>
                                    <div className='post-comment'>
                                    {item2.kind==='t1' &&<p className='blue-grey-text'><em>{item2.data.author}</em>
-                                    <span><em> | {(x2===1) ? `${x2} hour ago`:(a2===1) ? `1 day ago`:(a2>1) ? `${a2} days ago`: (x2===0)?`${minutes2} minutes ago`: `${x2} hours ago`}</em></span>
+                                    <span><em> | {(x2===1) ? `${x2} hour ago`:(a2===1) ? `1 day ago`:(a2>1) ? `${a2} days ago`: (x2===0&&minutes2===1) ? '1 minute ago' : (x2===0)?`${minutes2} minutes ago`: `${x2} hours ago`}</em></span>
                                     </p>}
                                     <Markdown>{item2.data.body}</Markdown>
          
@@ -158,7 +158,7 @@ export default function Subreddit() {
                                                     return(
                                         <div key={item3.data.created+item3.data.score+random3} className='post-replies'>
                                              {item3.kind==='t1' &&<p className='blue-grey-text'><em>{item3.data.author}</em>
-                                            <span><em> | {(x3===1) ? `${x3} hour ago`:(a3===1) ? `1 day ago`:(a3>1) ? `${a3} days ago`: (x3===0)?`${minutes3} minutes ago`: `${x3} hours ago`}</em></span>
+                                            <span><em> | {(x3===1) ? `${x3} hour ago`:(a3===1) ? `1 day ago`:(a3>1) ? `${a3} days ago`: (x3===0&&minutes3===1) ? '1 minute ago' : (x3===0)?`${minutes3} minutes ago`: `${x3} hours ago`}</em></span>
                                             </p>}
                                             <Markdown>{item3.data.body}</Markdown>
                                             {(item3.data.replies === undefined) ? '' : (typeof item3.data.replies !=='object') ? '' : <div>{item3.data.replies.data.children.map((item4)=>{
@@ -178,7 +178,7 @@ export default function Subreddit() {
                                         <div key={item4.data.created+item4.data.score+random4} className='post-replies replies-post'>
                                            {item4.kind==='t1' && <p className='blue-grey-text'>
                                                 <em>{item4.data.author}</em>
-                                                <span><em> | {(x4===1) ? `${x4} hour ago`:(a4===1) ? `1 day ago`:(a4>1) ? `${a4} days ago`: (x4===0)?`${minutes4} minutes ago`: `${x4} hours ago`}</em></span>
+                                                <span><em> | {(x4===1) ? `${x4} hour ago`:(a4===1) ? `1 day ago`:(a4>1) ? `${a4} days ago`: (x4===0&&minutes4===1) ? '1 minute ago' :  (x4===0)?`${minutes4} minutes ago`: `${x4} hours ago`}</em></span>
                                                 </p>}
                                             <Markdown>{item4.data.body}</Markdown>
                                             {(item4.data.replies === undefined) ? '' : (typeof item4.data.replies !=='object') ? '' : <div>{item4.data.replies.data.children.map((item5)=>{
@@ -197,7 +197,7 @@ export default function Subreddit() {
                                         <div key={item5.data.created+item5.data.score+random5} className='post-replies post-post replies-post'>
                                             {item5.kind==='t1' && <p className='blue-grey-text'>
                                                 <em>{item5.data.author}</em>
-                                                <span><em> | {(x5===1) ? `${x5} hour ago`:(a5===1) ? `1 day ago`:(a5>1) ? `${a5} days ago`: (x5===0)?`${minutes5} minutes ago`: `${x5} hours ago`}</em></span>
+                                                <span><em> | {(x5===1) ? `${x5} hour ago`:(a5===1) ? `1 day ago`:(a5>1) ? `${a5} days ago`: (x5===0&&minutes5===1) ? '1 minute ago' :  (x5===0)?`${minutes5} minutes ago`: `${x5} hours ago`}</em></span>
                                                 </p>}
                                             <Markdown>{item5.data.body}</Markdown>
                                             

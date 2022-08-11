@@ -77,7 +77,7 @@ useEffect(()=> {
            |
               Posted by <b>{item.data.author}</b>
               <span> |</span>
-              <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
+              <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0&&minutes===1) ? '1 minute ago' : (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
               </p>
               <div onClick={()=>{
                 let a = item.data.permalink.substr(1);

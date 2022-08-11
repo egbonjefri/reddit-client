@@ -35,7 +35,6 @@ function Homepage() {
         const response = await axios.get(`https://www.reddit.com/r/canada.json`, { params: { after:text , limit: 100} })
         dispatch(postAdder((response.data.data.children)));
         dispatch(resetter());
-        
         setText(response.data.data.after);
       }
       else {
@@ -46,9 +45,18 @@ function Homepage() {
     }
   }
     else {
+      if (truthy) {
+        const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after:text ,limit: 100}})
+        dispatch(postAdder((response.data.data.children)));
+        dispatch(resetter());
+        setText(response.data.data.after);
+      }
+      else {
       const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { limit: 100}})
       dispatch(postAdder((response.data.data.children)));
       dispatch(resetter());
+      setText(response.data.data.after);
+      }
     }
   }
     loadPost();
@@ -130,7 +138,7 @@ function handleScroll () {
              <span className='blue-grey-text'>{item.data.subreddit_name_prefixed} | </span>
                   Posted by <b> {item.data.author}</b>
                   <span > |</span>
-                  <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
+                  <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0&&minutes===1) ? '1 minute ago' : (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
                   </p>
                 <h5>{item.data.title}</h5>
                 { (item.data.media !== null && item.data.media.hasOwnProperty('reddit_video')) ? <video controls autoPlay>{<source src={`${item.data.secure_media.reddit_video.fallback_url}autoplay=1&muted=1`} />}</video> 
