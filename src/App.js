@@ -36,7 +36,7 @@ function App() {
 
   function handleSubmit(e) {
     untoggle();
-    navigate(`/search/?q=${change}`);
+    navigate(`/search/?q=${change}`, {replace:true});
     e.preventDefault();
     dispatch(searchAdder(change))
       }
@@ -66,7 +66,7 @@ function toggleBtn () {
 useEffect(()=> {
   
   if(link === '') {
-    navigate('/')
+    navigate('/', {replace:true})
   }
         // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
@@ -212,7 +212,7 @@ useEffect(()=> {
                            {array1.map((item)=>{
                              return (
                                <div onClick={()=> {
-                                 navigate('');
+                                 navigate('', {replace:true});
                                  dispatch(valueSetter(item));
                                  dispatch(subber(item))
                                }} key={array1.indexOf(item)}>

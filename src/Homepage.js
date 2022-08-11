@@ -20,7 +20,6 @@ function Homepage() {
   const [text, setText] = useState('');
   const blank = useSelector((state)=>state.counter.blank);
   const value = useSelector((state)=>state.counter.value);
-  const [next, setNext] = useState(false);
   const [truthy, setTruthy] = useState(false)
   const postArray = useSelector((state)=>state.counter.posts);
   const navigate = useNavigate()
@@ -36,7 +35,8 @@ function Homepage() {
         const response = await axios.get(`https://www.reddit.com/r/canada.json`, { params: { after:text , limit: 100} })
         dispatch(postAdder((response.data.data.children)));
         dispatch(resetter());
-        setTruthy(false)
+        
+        setText(response.data.data.after);
       }
       else {
         const response = await axios.get(`https://www.reddit.com/r/canada.json`, { params: { limit: 100}})
@@ -55,17 +55,16 @@ function Homepage() {
     setLoading(false)
   }, 2000);
       // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, next])
+  }, [value, truthy])
 
 
 
 useEffect(()=> {
   const element = document.getElementById('myBtn');
   window.addEventListener('scroll', ()=>{
-
+    
     if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-      setNext(true);
-      setTruthy(true)
+      setTruthy([])
     }
     if(window.scrollY > 300) {
       element.style.display = 'block';
@@ -78,7 +77,6 @@ useEffect(()=> {
 },[])
 
 function handleScroll () {
-  setNext(false)
   window.scroll({
     top: -2500, 
     left: 0, 
@@ -125,7 +123,7 @@ function handleScroll () {
                       dispatch(nameAdder(item.data.id));
                        dispatch(linkAdder(str));
                        dispatch(searchNav(newStr));
-                       navigate(str);
+                       navigate(str, {replace:true});
                         }}  className='main'>
                     <span className='black-text' >
            <p className='center'>

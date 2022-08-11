@@ -70,7 +70,7 @@ useEffect(()=> {
                 <span className='black-text' >
                 <p className='search-p center'>
            <span onClick={()=> {
-               navigate('/');
+               navigate('/', {replace:true});
                dispatch(valueSetter(item.data.permalink));
                dispatch(subber(item.data.subreddit_name_prefixed))
            }} className='searches blue-grey-text'>{item.data.subreddit_name_prefixed} </span>
