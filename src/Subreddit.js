@@ -195,7 +195,7 @@ export default function Subreddit() {
                                                                                                                                                     let x5;
                                                                                                                                                     let a5;                
                                                                                                                                                     (z5 === 0 && c5 === 0) ? x5 = y - hours5 : (c5===0 && z5 === 1) || z5 === -30 ? x5 = (24-hours5) + y : (c5===0) ? a5 = nowDate-dayDate5 : a5 = (31-dayDate5)+nowDate;                                                                                                                                                     return(
-                                        <div key={item5.data.created+item5.data.score+random5} className='post-replies post-post replies-post'>
+                                        <div key={item5.data.created+item5.data.score+random5} className='post-post'>
                                             {item5.kind==='t1' && <p className='blue-grey-text'>
                                                 <em>{item5.data.author}</em>
                                                 <span><em> | {(x5===1) ? `${x5} hour ago`:(a5===1) ? `1 day ago`:(a5>1) ? `${a5} days ago`: (x5===0&&minutes5===1) ? '1 minute ago' :  (x5===0)?`${minutes5} minutes ago`: `${x5} hours ago`}</em></span>
@@ -214,7 +214,22 @@ export default function Subreddit() {
                                             
                                     )
                                 })}</div>}
+                                                                            <button onClick={()=>{
+                                              const replies = document.querySelectorAll('.post-replies');
+                                              const replyBtn = document.querySelectorAll('.reply-button');
+                                              replyBtn.forEach((item)=> {
+                                                item.style.display = 'none'
+                                              })
+                                              replies.forEach((item)=>{
+                                                item.style.display = 'block'
+                                              });
+                                              window.scroll({
+                                                top: 1000,
+                                                behavior: 'smooth' 
+                                              });
+                                            }} className='reply-button mobile-only'>Show More Replies</button>
                                    </div>
+                                   
                                    </div>
                            )
                        })}

@@ -309,7 +309,12 @@ video {
   }
 }
 @media (max-width: 460px) {
- 
+ .reply-button {
+   background-color: white;
+   color: rgba(110, 110, 224, 0.637);
+   border: none;
+   margin: 1rem
+ }
   .mobile-only {
     display: block
   }
