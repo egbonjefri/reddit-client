@@ -6,7 +6,7 @@ import ChangeOver from './ChangeOver'
 import {
  valueSetter, subber, searchAdder,homepage
 } from './features/counter/counterSlice';
-let array1 = ['r/worldnews', 'r/mildlyinteresting', 'r/NatureIsFuckingLit',
+let array1 = ['r/worldnews', 'r/winnipeg', 'r/mildlyinteresting', 'r/NatureIsFuckingLit',
 'r/science', 'r/AnimalsBeingJerks', 'r/Awwducational', 'r/funny', 'r/space',
 'r/woahdude', 'r/javascript'];
 export function untoggle () {
@@ -36,7 +36,7 @@ function App() {
 
   function handleSubmit(e) {
     untoggle();
-    navigate(`/search/?q=${change}`, {replace:true});
+    navigate(`/search/?q=${change}`);
     e.preventDefault();
     dispatch(searchAdder(change))
       }
@@ -66,7 +66,7 @@ function toggleBtn () {
 useEffect(()=> {
   
   if(link === '') {
-    navigate('/', {replace:true})
+    navigate('/')
   }
         // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
@@ -212,7 +212,7 @@ useEffect(()=> {
                            {array1.map((item)=>{
                              return (
                                <div onClick={()=> {
-                                 navigate('', {replace:true});
+                                 navigate('');
                                  dispatch(valueSetter(item));
                                  dispatch(subber(item))
                                }} key={array1.indexOf(item)}>

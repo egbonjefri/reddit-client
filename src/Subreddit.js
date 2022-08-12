@@ -120,6 +120,7 @@ export default function Subreddit() {
             :
             (typeof item.data.preview ==='object')&& <img className='mobile-only' src={htmlDecode(item.data.preview.images[0].source.url)} alt={item.data.title} />
            } 
+           {item.data.hasOwnProperty('selftext') && <p className='selftext'>{item.data.selftext}</p>}
                         </div>
                        {comments.map((item2)=>{
                 let timeStamp2 = item2.data.created;

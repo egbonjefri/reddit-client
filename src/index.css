@@ -287,7 +287,10 @@ video {
   margin-left: -1rem;
   top: 0.15rem;
 }
-
+.selftext {
+  text-align: left;
+  margin: 1rem
+}
 @media (max-width: 1024px) {
   .posts {
     width: 80%
@@ -317,6 +320,9 @@ video {
     width: 95%
   }
   .post-post {
+    display: none
+  }
+  .replies-post {
     display: none
   }
   .divide {

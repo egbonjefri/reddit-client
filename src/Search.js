@@ -83,7 +83,7 @@ useEffect(()=> {
                 let a = item.data.permalink.substr(1);
                 let str = item.data.permalink.normalize('NFD').replace(/\p{Diacritic}/gu, '')
                 dispatch(linkAdder(str));
-                navigate(str, {replace: true});
+                navigate(str);
                 dispatch(searchNav(a));
                     }} >
             <h5>{item.data.title}</h5>

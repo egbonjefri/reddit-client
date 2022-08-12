@@ -131,7 +131,7 @@ function handleScroll () {
                       dispatch(nameAdder(item.data.id));
                        dispatch(linkAdder(str));
                        dispatch(searchNav(newStr));
-                       navigate(str, {replace:true});
+                       navigate(str);
                         }}  className='main'>
                     <span className='black-text' >
            <p className='center'>
