@@ -120,7 +120,7 @@ export default function Subreddit() {
             :
             (typeof item.data.preview ==='object') ? <img className='mobile-only' src={htmlDecode(item.data.preview.images[0].source.url)} alt={item.data.title} />
                   :
-            (item.data.hasOwnProperty('thumbnail')) && <img className='mobile-only' alt={item.data.title} src={item.data.thumbnail} />
+            (typeof item.data.thumbnail ==='object') && <img className='mobile-only' alt={item.data.title} src={item.data.thumbnail} />
      } 
            {item.data.hasOwnProperty('selftext') && <div className='selftext'><span><Markdown>{item.data.selftext}</Markdown></span></div>}
                         </div>
