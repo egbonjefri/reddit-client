@@ -6,9 +6,43 @@ import ChangeOver from './ChangeOver'
 import {
  valueSetter, subber, searchAdder,homepage
 } from './features/counter/counterSlice';
-let array1 = ['r/worldnews', 'r/winnipeg', 'r/mildlyinteresting', 'r/NatureIsFuckingLit',
-'r/science', 'r/AnimalsBeingJerks', 'r/Awwducational', 'r/funny', 'r/space',
-'r/woahdude', 'r/javascript'];
+import worldNews from './icons/worldNews.png'
+import woahDude from './icons/woahDude.png'
+import winnipeg from './icons/winnipeg.png'
+import space from './icons/space.png'
+import science from './icons/science.png'
+import nature from './icons/nature.png'
+import mildlyInteresting from './icons/mildlyInteresting.png'
+import funny from './icons/funny.png'
+import awwducational from './icons/awwducational.png'
+import animals from './icons/animals.png'
+import javascript from './icons/javascript.png'
+
+
+
+
+
+
+
+
+
+
+let array1 = [{name: 'r/worldnews', id: 0, src: worldNews},
+ {name: 'r/Winnipeg', id: 1 , src: winnipeg}, 
+ {name: 'r/mildlyinteresting', id: 2, src: mildlyInteresting}, 
+ {name: 'r/NatureIsFuckingLit', id: 3, src: nature},
+{name: 'r/science', id: 4, src: science}, 
+{name: 'r/AnimalsBeingJerks', id: 5, src: animals}, 
+{name: 'r/Awwducational', id: 6, src: awwducational},
+ {name: 'r/funny', id: 7, src: funny}, 
+{name: 'r/space', id: 8, src: space},
+{name: 'r/woahdude', id: 9, src: woahDude},
+ {name: 'r/javascript', id: 10, src: javascript}];
+
+
+
+
+
 export function untoggle () {
 
 
@@ -79,7 +113,7 @@ useEffect(()=> {
     const replies = document.querySelectorAll('.post-comment');
 
 
-
+    const replyBtn = document.querySelectorAll('.reply-button')
     const paragraphs = document.querySelectorAll('p');
     const titles = document.querySelectorAll('h5');
     const header = document.getElementsByClassName('nav-wrapper')[0];
@@ -110,6 +144,9 @@ useEffect(()=> {
         post.style.borderLeft = 'solid 1px white'
 
       })
+      replyBtn.forEach((item)=>{
+        item.style.backgroundColor = 'black'
+      })
       replies.forEach(post => {
         post.style.backgroundColor = 'black';
         post.style.color = 'white'
@@ -133,7 +170,9 @@ useEffect(()=> {
       icon1.style.color = 'black';
       icon2.style.color = 'black';
 
-     
+      replyBtn.forEach((item)=>{
+        item.style.backgroundColor = 'white'
+      })
       
       posts.forEach(post => {
         post.style.backgroundColor = 'white';
@@ -212,11 +251,13 @@ useEffect(()=> {
                            {array1.map((item)=>{
                              return (
                                <div onClick={()=> {
-                                 navigate('');
-                                 dispatch(valueSetter(item));
-                                 dispatch(subber(item))
-                               }} key={array1.indexOf(item)}>
-                                 {item}
+                                 navigate('/', {replace:true});
+                                 dispatch(valueSetter(item.name));
+                                 dispatch(subber(item.name))
+                               }} key={item.id}>
+                                 <span className='mobile-menu-items'><img className='mobile-icons' alt={item.name} src={item.src}/>
+                                 {item.name}
+                                 </span>
                                  </div>
                              )
                            })}

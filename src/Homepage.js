@@ -18,9 +18,10 @@ function htmlDecode(input) {
 function Homepage() {
   const [loading, setLoading] = useState(true);
   const [text, setText] = useState('');
+  const [newText, setNewText] = useState('')
   const blank = useSelector((state)=>state.counter.blank);
   const value = useSelector((state)=>state.counter.value);
-  const [truthy, setTruthy] = useState(false)
+  const [truthy, setTruthy] = useState(true)
   const postArray = useSelector((state)=>state.counter.posts);
   const navigate = useNavigate()
   const dispatch = useDispatch();
@@ -31,32 +32,17 @@ function Homepage() {
   const loadPost =  async () => {
 
      if (value === '') {
-      if (truthy) {
-        const response = await axios.get(`https://www.reddit.com/r/canada.json`, { params: { after:text , limit: 100} })
-        dispatch(postAdder((response.data.data.children)));
-        dispatch(resetter());
-        setText(response.data.data.after);
-      }
-      else {
-        const response = await axios.get(`https://www.reddit.com/r/canada.json`, { params: { limit: 100}})
+        const response = await axios.get(`https://www.reddit.com/r/canada.json`, { params: { after:text, limit: 100}})
         dispatch(postAdder((response.data.data.children)));
         setText(response.data.data.after)
-        dispatch(resetter())
-    }
+        dispatch(resetter());
   }
     else {
-      if (truthy) {
-        const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after:text ,limit: 100}})
-        dispatch(postAdder((response.data.data.children)));
-        dispatch(resetter());
-        setText(response.data.data.after);
-      }
-      else {
-      const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { limit: 100}})
+
+      const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after: newText, limit: 100}})
       dispatch(postAdder((response.data.data.children)));
       dispatch(resetter());
-      setText(response.data.data.after);
-      }
+      setNewText(response.data.data.after);
     }
   }
     loadPost();
@@ -71,11 +57,12 @@ useEffect(()=> {
   const element = document.getElementById('myBtn');
   window.addEventListener('scroll', ()=>{
     
-    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-      setTruthy([])
-    }
+
     if(window.scrollY > 300) {
       element.style.display = 'block';
+      if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+        setTruthy([]);
+      }
     }
   
     else {
