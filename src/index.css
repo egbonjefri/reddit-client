@@ -28,6 +28,11 @@ pre {
   display: block;
   word-wrap: break-word;
 }
+blockquote {
+  margin: 0;
+  border-left: 5px rgb(155, 147, 147) solid;
+  background-color: rgba(221, 221, 221, 0.356);
+}
 .loading {
   display: flex;
   align-items: center;
@@ -43,6 +48,9 @@ nav {
 }
 h5 {
   color: black
+}
+h1 {
+  font-size: 35px
 }
 .post-cta {
   display: flex;
@@ -60,7 +68,11 @@ h5 {
   display: flex;
   border-radius: 0.75%;
   cursor: pointer;
+  transition: 0.35s ease-in-out;
   overflow-wrap: break-word !important;
+}
+.posts:hover {
+  background-color: #6d6d6d1c !important;
 }
 .search{
   margin-right:5rem !important;
@@ -115,6 +127,10 @@ img {
 .link {
   color: rgb(89, 155, 216) !important;
   cursor: pointer;
+  transition: .35s ease-in-out;
+}
+.link:hover {
+  text-decoration: underline;
 }
 .thumb {
   width: 250px;
@@ -123,21 +139,24 @@ img {
 .post-comment {
   max-width: 100%;
   border: solid 1px black;
-  box-shadow: 0.5px 0.75px 0.5px #000000;
+  box-shadow: 0.5px 0.75px 1.5px #000000;
   margin: 0.2rem auto;
   background: white;
   display: block;
   border-radius: 0.15%;
   padding: 0 1rem;
   overflow-wrap: break-word;
+  border-left: solid 2px black !important
+
 }
 .post-title {
   width: 100%;
   border: solid 1px black;
-  box-shadow: 0.5px 0.75px 0.5px #000000;
+  box-shadow: 0.5px 0.75px 1.5px #000000;
   margin: 0.5rem auto;
   overflow-wrap: break-word;
-  padding: 0 1rem
+  padding: 0 1rem;
+  border-left: solid 2px black !important
 }
 .back {
   background-color: white;
@@ -153,12 +172,18 @@ img {
   padding: 0 1rem ;
 
 }
+.post-replies:hover {
+  border-left: solid 2px rgb(133, 131, 131) !important
+}
 .replies-post {
   position: relative;
   border-left:solid 2px black;
   margin: 1rem 2.5rem;
   padding: 0 1rem;
- 
+}
+.post-post:hover {
+  border-left: solid 2px rgb(172, 129, 129) !important
+
 }
 
 .post-post {

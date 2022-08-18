@@ -11,9 +11,14 @@ const Loading = ({ type, color }) => (
   <ReactLoading type={'cylon'} color={'grey'} />
 );
 
-function htmlDecode(input) {
+export function htmlDecode(input) {
+  if (input === undefined) {
+    return ''
+  }
+  else {
   let doc = new DOMParser().parseFromString(input, "text/html");
   return doc.documentElement.textContent
+  }
 }
 function Homepage() {
   const [loading, setLoading] = useState(true);
