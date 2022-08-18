@@ -8,7 +8,7 @@ import Markdown from 'marked-react'
 
 
 export default function Subreddit() {
-
+  let regex = /^https/
     const comments = useSelector((state)=>state.counter.comments);
     const name = useSelector((state)=>state.counter.fullname);
     const searchPage = useSelector((state)=>state.counter.searchPage)
@@ -120,7 +120,7 @@ export default function Subreddit() {
             :
             (typeof item.data.preview ==='object') ? <img className='mobile-only' src={htmlDecode(item.data.preview.images[0].source.url)} alt={item.data.title} />
                   :
-            (typeof item.data.thumbnail ==='object') && <img className='mobile-only' alt={item.data.title} src={item.data.thumbnail} />
+            (regex.test(item.data.thumbnail)) && <img className='mobile-only' alt={item.data.title} src={item.data.thumbnail} />
      } 
            {item.data.hasOwnProperty('selftext') && <div className='selftext'><span><Markdown>{item.data.selftext}</Markdown></span></div>}
                         </div>
@@ -143,7 +143,8 @@ export default function Subreddit() {
                                    {item2.kind==='t1' &&<p className='blue-grey-text'><em>{item2.data.author}</em>
                                     <span><em> | {(x2===1) ? `${x2} hour ago`:(a2===1) ? `1 day ago`:(a2>1) ? `${a2} days ago`: (x2===0&&minutes2===1) ? '1 minute ago' : (x2===0)?`${minutes2} minutes ago`: `${x2} hours ago`}</em></span>
                                     </p>}
-                                    <Markdown>{item2.data.body}</Markdown>
+                                    {item2.data.hasOwnProperty('media_metadata') ? <img className='thumb' alt={item2.data.media_metadata[Object.keys(item2.data.media_metadata)[0]].e} src={item2.data.media_metadata[Object.keys(item2.data.media_metadata)[0]].p[0].u} />: <Markdown>{item2.data.body}</Markdown>}
+
          
                                 {(item2.data.replies === undefined) ? '' : (typeof item2.data.replies !=='object') ? '' : <div>{item2.data.replies.data.children.map((item3)=>{
                                                     let timeStamp3 = item3.data.created;
@@ -163,7 +164,8 @@ export default function Subreddit() {
                                              {item3.kind==='t1' &&<p className='blue-grey-text'><em>{item3.data.author}</em>
                                             <span><em> | {(x3===1) ? `${x3} hour ago`:(a3===1) ? `1 day ago`:(a3>1) ? `${a3} days ago`: (x3===0&&minutes3===1) ? '1 minute ago' : (x3===0)?`${minutes3} minutes ago`: `${x3} hours ago`}</em></span>
                                             </p>}
-                                            <Markdown>{item3.data.body}</Markdown>
+                                            {item3.data.hasOwnProperty('media_metadata') ? <img className='thumb' alt={item3.data.media_metadata[Object.keys(item3.data.media_metadata)[0]].e} src={item3.data.media_metadata[Object.keys(item3.data.media_metadata)[0]].p[0].u} />: <Markdown>{item3.data.body}</Markdown>}
+
                                             {(item3.data.replies === undefined) ? '' : (typeof item3.data.replies !=='object') ? '' : <div>{item3.data.replies.data.children.map((item4)=>{
                                                                                                     let timeStamp4 = item4.data.created;
                                                                                                     let date4 = new Date(timeStamp4* 1000);
@@ -183,7 +185,7 @@ export default function Subreddit() {
                                                 <em>{item4.data.author}</em>
                                                 <span><em> | {(x4===1) ? `${x4} hour ago`:(a4===1) ? `1 day ago`:(a4>1) ? `${a4} days ago`: (x4===0&&minutes4===1) ? '1 minute ago' :  (x4===0)?`${minutes4} minutes ago`: `${x4} hours ago`}</em></span>
                                                 </p>}
-                                            <Markdown>{item4.data.body}</Markdown>
+                                            {item4.data.hasOwnProperty('media_metadata') ? <img className='thumb' alt={item4.data.media_metadata[Object.keys(item4.data.media_metadata)[0]].e} src={item4.data.media_metadata[Object.keys(item4.data.media_metadata)[0]].p[0].u} />: <Markdown>{item4.data.body}</Markdown>}
                                             {(item4.data.replies === undefined) ? '' : (typeof item4.data.replies !=='object') ? '' : <div>{item4.data.replies.data.children.map((item5)=>{
                                                                                                                                                     let timeStamp5 = item5.data.created;
                                                                                                                                                     let random5 = Math.floor(Math.random() * 100000);
@@ -202,8 +204,31 @@ export default function Subreddit() {
                                                 <em>{item5.data.author}</em>
                                                 <span><em> | {(x5===1) ? `${x5} hour ago`:(a5===1) ? `1 day ago`:(a5>1) ? `${a5} days ago`: (x5===0&&minutes5===1) ? '1 minute ago' :  (x5===0)?`${minutes5} minutes ago`: `${x5} hours ago`}</em></span>
                                                 </p>}
-                                            <Markdown>{item5.data.body}</Markdown>
+                                                {item5.data.hasOwnProperty('media_metadata') ? <img className='thumb' alt={item5.data.media_metadata[Object.keys(item5.data.media_metadata)[0]].e} src={item5.data.media_metadata[Object.keys(item5.data.media_metadata)[0]].p[0].u} />: <Markdown>{item5.data.body}</Markdown>}
+                                                {(item5.data.replies === undefined) ? '' : (typeof item5.data.replies !=='object') ? '' : <div>{item5.data.replies.data.children.map((item6)=>{
+                                                                                                                                                    let timeStamp6 = item6.data.created;
+                                                                                                                                                    let random6 = Math.floor(Math.random() * 100000);
+                                                                                                                                                    let date6 = new Date(timeStamp6* 1000);
+                                                                                                                                                    let hours6 = date6.getHours();
+                                                                                                                                                    let dayDate6 = date6.getDate();
+                                                                                                                                                    let z6 = nowDate - dayDate6;
+                                                                                                                                                    let dateMonth6 = date6.getMonth();
+                                                                                                                                                    let c6 = nowMonth - dateMonth6;
+                                                                                                                                                    let minutes6 = now.getMinutes() - date6.getMinutes();
+                                                                                                                                                    let x6;
+                                                                                                                                                    let a6;                
+                                                                                                                                                    (z6 === 0 && c6 === 0) ? x6 = y - hours6 : (c6===0 && z6 === 1) || z6 === -30 ? x6 = (24-hours6) + y : (c6===0) ? a6 = nowDate-dayDate6 : a6 = (31-dayDate6)+nowDate;                                                                                                                                                     return(
+                                        <div key={random6} className='post-post'>
+                                            {item6.kind==='t1' && <p className='blue-grey-text'>
+                                                <em>{item6.data.author}</em>
+                                                <span><em> | {(x6===1) ? `${x6} hour ago`:(a6===1) ? `1 day ago`:(a6>1) ? `${a6} days ago`: (x6===0&&minutes6===1) ? '1 minute ago' :  (x6===0)?`${minutes6} minutes ago`: `${x6} hours ago`}</em></span>
+                                                </p>}
+                                                {item6.data.hasOwnProperty('media_metadata') ? <img className='thumb' alt={item6.data.media_metadata[Object.keys(item6.data.media_metadata)[0]].e} src={item6.data.media_metadata[Object.keys(item6.data.media_metadata)[0]].p[0].u} />: <Markdown>{item6.data.body}</Markdown>}
                                             
+                                            </div>
+                                            
+                                    )
+                                })}</div>}
                                             </div>
                                             
                                     )

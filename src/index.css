@@ -60,7 +60,6 @@ h5 {
   display: flex;
   border-radius: 0.75%;
   cursor: pointer;
-  overflow-x: scroll !important;
   overflow-wrap: break-word !important;
 }
 .search{
@@ -114,8 +113,12 @@ img {
   margin-top: -0.15rem
 }
 .link {
-  color: rgb(0, 0, 136) !important;
+  color: rgb(89, 155, 216) !important;
   cursor: pointer;
+}
+.thumb {
+  width: 250px;
+  margin: 0
 }
 .post-comment {
   max-width: 100%;
@@ -134,6 +137,7 @@ img {
   box-shadow: 0.5px 0.75px 0.5px #000000;
   margin: 0.5rem auto;
   overflow-wrap: break-word;
+  padding: 0 1rem
 }
 .back {
   background-color: white;
@@ -307,6 +311,9 @@ video {
   .posts {
     width: 80%
   }
+  .divide {
+    font-size: 9px
+  }
   img {
     width: 90%;
     margin: 0 auto
@@ -317,7 +324,7 @@ video {
   }
  
   .back {
-    width: 80%
+    width: 90%
   }
 }
 @media (max-width: 460px) {
@@ -327,9 +334,7 @@ video {
    border: none;
    margin: 1rem
  }
- .post-title {
-   padding: 0 1rem
- }
+
   .mobile-only {
     display: block
   }
@@ -346,7 +351,6 @@ video {
     display: none
   }
   .divide {
-    font-size: 10px;
     min-width: 2.75rem !important
   }
   .posts .ups {
