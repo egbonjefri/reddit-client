@@ -4,7 +4,7 @@ import { useEffect, useState} from 'react'
 import {NavLink, useSearchParams, useNavigate} from 'react-router-dom';
 import ChangeOver from './ChangeOver'
 import {
- valueSetter, subber, searchAdder,homepage
+ valueSetter, afterResetter, subber, searchAdder,homepage
 } from './features/counter/counterSlice';
 import worldNews from './icons/worldNews.png'
 import woahDude from './icons/woahDude.png'
@@ -111,7 +111,7 @@ useEffect(()=> {
     const posts = document.querySelectorAll('.posts');
     const comments = document.querySelectorAll('.post-replies');
     const replies = document.querySelectorAll('.post-comment');
-
+    const postPost = document.querySelectorAll('.post-post');
 
     const replyBtn = document.querySelectorAll('.reply-button')
     const paragraphs = document.querySelectorAll('p');
@@ -126,33 +126,37 @@ useEffect(()=> {
   
     if (truthy) {
       
-      body.style.backgroundColor = 'black';
+      body.style.backgroundColor = 'rgb(26,26,27)';
       
-      header.style.backgroundColor = 'black';
+      header.style.backgroundColor = 'rgb(26,26,27)';
       icon1.style.color = 'white';
       icon2.style.color = 'white';
 
      
       
       posts.forEach(post => {
-        post.style.backgroundColor = 'black';
-        post.style.color = 'white'
+        post.style.backgroundColor = 'rgb(26,26,27,0.8)';
+        post.style.color = 'white';
+        post.style.boxShadow = '1px 1px 5px #858383'
       })
       comments.forEach(post => {
-        post.style.backgroundColor = 'black';
+        post.style.backgroundColor = 'rgb(26,26,27,0.8)';
         post.style.color = 'white';
         post.style.borderLeft = 'solid 1px white'
 
       })
       replyBtn.forEach((item)=>{
-        item.style.backgroundColor = 'black'
+        item.style.backgroundColor = 'rgb(26,26,27,0.8)'
       })
       replies.forEach(post => {
-        post.style.backgroundColor = 'black';
+        post.style.backgroundColor = 'rgb(26,26,27)';
         post.style.color = 'white'
       })
+      postPost.forEach(post => {
+        post.style.borderLeft = 'solid 1px white'
+      })
       postTitle.forEach(post => {
-        post.style.background = 'black';
+        post.style.background = 'rgb(26,26,27)';
       })
       paragraphs.forEach(item => {
         item.style.color = 'white'
@@ -185,6 +189,10 @@ useEffect(()=> {
 
       })
       replies.forEach(post => {
+        post.style.backgroundColor = 'white';
+        post.style.color = 'black'
+      })
+      postPost.forEach(post => {
         post.style.backgroundColor = 'white';
         post.style.color = 'black'
       })
@@ -253,6 +261,7 @@ useEffect(()=> {
                                <div onClick={()=> {
                                  navigate('/', {replace:true});
                                  dispatch(valueSetter(item.name));
+                                 dispatch(afterResetter())
                                  dispatch(subber(item.name))
                                }} key={item.id}>
                                  <span className='mobile-menu-items'><img className='mobile-icons' alt={item.name} src={item.src}/>

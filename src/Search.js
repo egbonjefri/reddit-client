@@ -3,7 +3,7 @@ import ReactLoading from 'react-loading'
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useState, useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
-import { searchF, valueSetter, subber, resetter, searchNav, linkAdder } from './features/counter/counterSlice';
+import { afterResetter, asyncFunction, homepage, searchF, valueSetter, subber, resetter, searchNav, linkAdder } from './features/counter/counterSlice';
 const Loading = ({ type, color }) => (
     <ReactLoading type={'spin'} color={'grey'} />
   );
@@ -24,6 +24,12 @@ useEffect(()=> {
   const loadPost =  async () => {
     const response = await axios.get(`https://www.reddit.com/search.json?q=${search}`, { params: { limit: 100}})
      dispatch(searchF((response.data.data.children)));
+     setTimeout(()=> {
+       // eslint-disable-next-line
+      response.data.data.children.map((item)=>{
+        dispatch(asyncFunction(item.data.subreddit_name_prefixed))
+      })
+  }, 500)
      dispatch(resetter())
     }
     setLoading(false);
@@ -71,12 +77,16 @@ useEffect(()=> {
                 <p className='search-p center'>
            <span onClick={()=> {
                navigate('/', {replace:true});
+               dispatch(afterResetter())
+               dispatch(homepage())
                dispatch(valueSetter(item.data.permalink));
                dispatch(subber(item.data.subreddit_name_prefixed))
-           }} className='searches blue-grey-text'>{item.data.subreddit_name_prefixed} </span>
-           |
-              Posted by <b>{item.data.author}</b>
-              <span> |</span>
+           }} className='searches blue-grey-text'>{item.data.hasOwnProperty('icon_img') && <span className='author-icon'><img  alt='' src={item.data.icon_img} /></span>}
+           &nbsp;{item.data.subreddit_name_prefixed} 
+           </span>
+                  
+           &nbsp;|&nbsp;Posted by&nbsp;<b>{item.data.author}</b>
+           &nbsp;|&nbsp;
               <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0&&minutes===1) ? '1 minute ago' : (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
               </p>
               <div onClick={()=>{
@@ -84,6 +94,7 @@ useEffect(()=> {
                 let str = item.data.permalink.normalize('NFD').replace(/\p{Diacritic}/gu, '')
                 dispatch(linkAdder(str));
                 navigate(str);
+                dispatch(asyncFunction(item.data.subreddit_name_prefixed))
                 dispatch(searchNav(a));
                     }} >
             <h5>{item.data.title}</h5>

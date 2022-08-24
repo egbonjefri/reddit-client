@@ -30,8 +30,8 @@ pre {
 }
 blockquote {
   margin: 0;
-  border-left: 5px rgb(155, 147, 147) solid;
-  background-color: rgba(221, 221, 221, 0.356);
+  border-left: 4px rgb(155, 147, 147) solid;
+  background-color: rgba(255, 255, 255, 0.26);
 }
 .loading {
   display: flex;
@@ -44,7 +44,28 @@ nav {
 }
 .brand-logo {
   color: black;
-  margin-left: 1rem
+  margin-left: 0.5rem
+}
+.banner-img {
+  margin: 0 auto;
+  padding: 0.5rem;
+  width: 80%;
+  height: 20rem
+}
+.banner-icon {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  padding: 1rem
+}
+.banner-icon img {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: -150px;
+  left: 45%
+  
 }
 h5 {
   color: black
@@ -100,7 +121,7 @@ img {
   display: block;
   margin: 0;
   min-width: 3rem !important;
-  font-size: 13px;
+  font-size: 10px;
 }
 .posts .ups {
   margin-top: 2rem;
@@ -160,7 +181,7 @@ img {
 }
 .back {
   background-color: white;
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
   display: block;
 
@@ -182,7 +203,7 @@ img {
   padding: 0 1rem;
 }
 .post-post:hover {
-  border-left: solid 2px rgb(172, 129, 129) !important
+  border-left: solid 2px rgb(133, 131, 131) !important
 
 }
 
@@ -204,12 +225,17 @@ img {
   padding-left: 2rem;
   font-weight: bolder;
 }
+.searches {
+  display: flex;
+  align-items: center;
+}
 .searches:hover {
   text-decoration: underline;
 }
 .search-p {
-  display: block;
-  margin: 1rem 3rem !important
+ display: flex;
+ align-items: center;
+ justify-content: center;
 }
 video {
   display: block !important;
@@ -329,12 +355,51 @@ video {
   margin-top: 1.1rem;
   margin-right: 0.5rem
 }
+.reply-header {
+  display: flex;
+  align-items: center;
+}
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.author-icon {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  display: inline-flex;
+  padding: 6px;
+  margin: 0px 5px;
+  border: solid 1px black;
+}
+.author-icon img {
+  margin: 0px;
+}
 .mobile-menu-items {
   display: inline-flex
+}
+.desktop-only {
+  max-width: 40%;
+  margin: 0 auto
+
 }
 @media (max-width: 1024px) {
   .posts {
     width: 80%
+  }
+  .banner-img {
+    width: 100%;
+  }
+  .reply-header{
+    font-size: 10px
+  }
+  .banner-icon{
+    width: 100%
+  }
+  .banner-icon img {
+    top: -90px;
+    left: 47%
   }
   .divide {
     font-size: 9px
@@ -359,10 +424,32 @@ video {
    border: none;
    margin: 1rem
  }
-
+.reddit-info {
+  display: none
+}
+.banner-img {
+  height: 10rem
+}
+.banner-icon img {
+  left: 43%;
+  top: -80px
+}
+.replies-post{
+  width: 100%
+}
+.mobile-header {
+  position: absolute;
+  top: 10rem;
+  left: 1.5rem;
+  font-weight: 500
+}
   .mobile-only {
     display: block
   }
+  .main-header {
+    font-size: 11px
+  }
+
   .posts {
     width: 95%
   }
@@ -484,6 +571,18 @@ opacity: 0;
 @media(max-width: 300px) {
   .search {
     width: 18%
+  }
+}
+@media(max-width: 370px) {
+  .main-header {
+    font-size: 9px
+  }
+  .reply-header{
+    font-size: 10px
+  }
+  .mobile-author{
+    height: 40px;
+    width: 40px
   }
 }
 @keyframes slide-menu {

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import ReactLoading from 'react-loading'
+import ReactMarkdown from 'react-markdown'
+
 import { useSelector, useDispatch } from 'react-redux';
 import {
-   searchNav, nameAdder, resetter, postAdder,linkAdder
+  afterSetter, asyncFunction,searchNav, nameAdder, resetter, postAdder,linkAdder
 } from './features/counter/counterSlice';
 import './materialize.css'
 const Loading = ({ type, color }) => (
@@ -22,10 +24,12 @@ export function htmlDecode(input) {
 }
 function Homepage() {
   const [loading, setLoading] = useState(true);
-  const [text, setText] = useState('');
-  const [newText, setNewText] = useState('')
   const blank = useSelector((state)=>state.counter.blank);
   const value = useSelector((state)=>state.counter.value);
+  const after = useSelector((state)=>state.counter.afterText);
+  const [text, setText] = useState('')
+  const redditInfo = useSelector((state)=>state.counter.subbreddit_info);
+
   const [truthy, setTruthy] = useState(true)
   const postArray = useSelector((state)=>state.counter.posts);
   const navigate = useNavigate()
@@ -35,20 +39,11 @@ function Homepage() {
     setTimeout(()=> {
       
   const loadPost =  async () => {
-
-     if (value === '') {
-        const response = await axios.get(`https://www.reddit.com/r/canada.json`, { params: { after:text, limit: 100}})
-        dispatch(postAdder((response.data.data.children)));
-        setText(response.data.data.after)
-        dispatch(resetter());
-  }
-    else {
-
-      const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after: newText, limit: 100}})
+      const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after: after, limit: 100}})
       dispatch(postAdder((response.data.data.children)));
+      dispatch(asyncFunction(blank));
+      setText(response.data.data.after)
       dispatch(resetter());
-      setNewText(response.data.data.after);
-    }
   }
     loadPost();
     setLoading(false)
@@ -66,7 +61,9 @@ useEffect(()=> {
     if(window.scrollY > 300) {
       element.style.display = 'block';
       if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+        dispatch(afterSetter(text))
         setTruthy([]);
+       
       }
     }
   
@@ -86,6 +83,15 @@ function handleScroll () {
 }
   return (
     <div>
+      {(!loading && typeof redditInfo.data === 'object') && <div>
+        {redditInfo.data.banner_size !== null && <img alt='' className='banner-img' src={redditInfo.data.banner_img} />}
+        {redditInfo.data.icon_size !== null && <span className='banner-icon'><img alt='' src={redditInfo.data.icon_img} />
+        <h5><b>About {redditInfo.data.display_name_prefixed}</b></h5>
+        <ReactMarkdown children={redditInfo.data.public_description}></ReactMarkdown>
+        <span>{redditInfo.data.subscribers >= 1000000 ? <b>{(redditInfo.data.subscribers/1000000).toFixed(1)}m Subscribers</b> : <b>{(redditInfo.data.subscribers/1000).toFixed(1)}k Subscribers</b>}</span>
+        </span>}
+        
+        </div>}
   <button onClick={()=>handleScroll()} id='myBtn' className='button-top'>Back to Top</button>
       {loading ? (
               <div className='loading'>
@@ -123,12 +129,13 @@ function handleScroll () {
                       dispatch(nameAdder(item.data.id));
                        dispatch(linkAdder(str));
                        dispatch(searchNav(newStr));
-                       navigate(str);
+                       navigate(str, {replace: true});
                         }}  className='main'>
                     <span className='black-text' >
            <p className='center'>
-             <span className='blue-grey-text'>{item.data.subreddit_name_prefixed} | </span>
-                  Posted by <b> {item.data.author}</b>
+            
+    Posted by
+                   <b> {item.data.author}</b>
                   <span > |</span>
                   <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0&&minutes===1) ? '1 minute ago' : (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
                   </p>
@@ -146,7 +153,7 @@ function handleScroll () {
                 </div>
                  )
               })
-              
+             
           }
 
     </div>
