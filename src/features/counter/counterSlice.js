@@ -18,7 +18,8 @@ const initialState = {
   icons: [],
   pictures: [],
   subbreddit_info: '',
-  afterText: ''
+  afterText: '',
+  loading: true
 };
 
 
@@ -133,6 +134,7 @@ export const counterSlice = createSlice({
     },
     resetter: (state) => {
       state.link = '';
+      state.loading = true
     },
     homepage: (state) => {
       
@@ -270,6 +272,10 @@ extraReducers: (builder) => {
 })
     }
   })
+  state.loading = false
+})
+.addCase(fourthReplyGetter.pending, (state)=>{
+  state.loading = true
 })
 }
 

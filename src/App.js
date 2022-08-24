@@ -4,7 +4,7 @@ import { useEffect, useState} from 'react'
 import {NavLink, useSearchParams, useNavigate} from 'react-router-dom';
 import ChangeOver from './ChangeOver'
 import {
- valueSetter, afterResetter, subber, searchAdder,homepage
+ valueSetter, afterResetter, resetter, subber, searchAdder,homepage
 } from './features/counter/counterSlice';
 import worldNews from './icons/worldNews.png'
 import woahDude from './icons/woahDude.png'
@@ -101,6 +101,7 @@ useEffect(()=> {
   
   if(link === '') {
     navigate('/')
+    dispatch(resetter())
   }
         // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])

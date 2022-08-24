@@ -394,6 +394,9 @@ video {
   .reply-header{
     font-size: 10px
   }
+  .search-p{
+    font-size: 8px
+  }
   .banner-icon{
     width: 100%
   }
@@ -416,6 +419,7 @@ video {
   .back {
     width: 90%
   }
+
 }
 @media (max-width: 460px) {
  .reply-button {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import {commentAdder, iconGetter, firstReplyGetter, secondReplyGetter, thirdReplyGetter, fourthReplyGetter} from './features/counter/counterSlice';
 import Skeleton from 'react-loading-skeleton'
@@ -23,8 +23,8 @@ export default function Subreddit() {
     const searchPage = useSelector((state)=>state.counter.searchPage)
     const title = useSelector((state)=>state.counter.title);
     const value = useSelector((state)=>state.counter.value);
+    const isLoading = useSelector((state)=>state.counter.loading);
     const redditInfo = useSelector((state)=>state.counter.subbreddit_info);
-    const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
 
     useEffect(()=> {
@@ -79,7 +79,6 @@ export default function Subreddit() {
           left: 0, 
           behavior: 'smooth' 
         });
-        setLoading(false);
         loadPost();
       }, 5000)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,7 +86,7 @@ export default function Subreddit() {
 
     return (
         <div>
-        {loading ? (
+        {isLoading ? (
                     <div className="post">
                     <div className="left-col">
                         <div className="avatar">
