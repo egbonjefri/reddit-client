@@ -35,7 +35,12 @@ export default function Subreddit() {
             const response = await axios.get(`https://www.reddit.com/${searchPage}.json`);
             dispatch(commentAdder((response.data)));
             setTimeout(()=> {
-              // eslint-disable-next-line
+              
+              if(response.data[1].data.children.length === 0){
+                dispatch(iconGetter('[deleted]'))
+              }
+              else{
+                // eslint-disable-next-line
              response.data[1].data.children.map((item)=>{
                dispatch(iconGetter(item.data.author));
                if(item.data.replies !== undefined && typeof item.data.replies === 'object') {
@@ -63,6 +68,7 @@ export default function Subreddit() {
                 })
                }
              })
+            }
          }, 500)
           }
           else if (value !== '') {
@@ -80,7 +86,7 @@ export default function Subreddit() {
           behavior: 'smooth' 
         });
         loadPost();
-      }, 5000)
+      }, 500)
     // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
 

@@ -134,7 +134,6 @@ export const counterSlice = createSlice({
     },
     resetter: (state) => {
       state.link = '';
-      state.loading = true
     },
     homepage: (state) => {
       
@@ -181,6 +180,7 @@ extraReducers: (builder) => {
     }
   }
   })
+  state.loading = false
 })
 .addCase(firstReplyGetter.fulfilled, (state,action)=>{
   // eslint-disable-next-line
@@ -195,6 +195,7 @@ extraReducers: (builder) => {
       }
       })
     }
+    
   })
 })
 .addCase(secondReplyGetter.fulfilled, (state,action)=>{
@@ -272,10 +273,10 @@ extraReducers: (builder) => {
 })
     }
   })
-  state.loading = false
+ 
 })
-.addCase(fourthReplyGetter.pending, (state)=>{
-  state.loading = true
+.addCase(iconGetter.pending, (state)=>{
+  state.loading = true;
 })
 }
 
