@@ -26,9 +26,9 @@ function Homepage() {
   const [loading, setLoading] = useState(true);
   const blank = useSelector((state)=>state.counter.blank);
   const value = useSelector((state)=>state.counter.value);
-  const afterText = useSelector((state)=>state.counter.afterText);
   const redditInfo = useSelector((state)=>state.counter.subbreddit_info);
   let array1 = []
+  const [text, setText] = useState('')
   const [truthy, setTruthy] = useState(true)
   const postArray = useSelector((state)=>state.counter.posts);
   const navigate = useNavigate()
@@ -38,12 +38,11 @@ function Homepage() {
     setTimeout(()=> {
       
   const loadPost =  async () => {
-      const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after: afterText, limit: 100}})
+      const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after: text, limit: 100}})
       dispatch(postAdder((response.data.data.children)));
       dispatch(asyncFunction(blank));
       array1.push(response.data.data.after)
       dispatch(resetter());
-      
   }
     loadPost();
     setLoading(false)
@@ -60,12 +59,12 @@ useEffect(()=> {
 
     if(window.scrollY > 300) {
       element.style.display = 'block';
-      
+      dispatch(afterSetter(array1[0]));
       if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-        dispatch(afterSetter(array1[0]))
         setTruthy([]);
-       
-      }
+        setText(array1[0])
+      
+    }
     }
   
     else {
@@ -131,7 +130,7 @@ function handleScroll () {
                       dispatch(nameAdder(item.data.id));
                        dispatch(linkAdder(str));
                        dispatch(searchNav(newStr));
-                       navigate(str, {replace: true});
+                       navigate(str);
                         }}  className='main'>
                     <span className='black-text' >
            <p className='center'>

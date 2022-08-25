@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
+
 import {commentAdder, iconGetter, firstReplyGetter, secondReplyGetter, thirdReplyGetter, fourthReplyGetter} from './features/counter/counterSlice';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -25,10 +26,10 @@ export default function Subreddit() {
     const value = useSelector((state)=>state.counter.value);
     const isLoading = useSelector((state)=>state.counter.loading);
     const redditInfo = useSelector((state)=>state.counter.subbreddit_info);
+
     const dispatch = useDispatch();
 
     useEffect(()=> {
-     
         setTimeout(()=> {
       const loadPost =  async () => {
           if (searchPage !== '') {
@@ -87,6 +88,7 @@ export default function Subreddit() {
         });
         loadPost();
       }, 500)
+      
     // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
 

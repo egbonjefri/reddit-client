@@ -2,6 +2,7 @@ import axios from 'axios';
 import ReactLoading from 'react-loading'
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useState, useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
 import {useNavigate} from 'react-router-dom'
 import { afterResetter, asyncFunction, homepage, searchF, valueSetter, subber, resetter, searchNav, linkAdder } from './features/counter/counterSlice';
 const Loading = ({ type, color }) => (
@@ -97,7 +98,7 @@ useEffect(()=> {
                 dispatch(asyncFunction(item.data.subreddit_name_prefixed))
                 dispatch(searchNav(a));
                     }} >
-            <h5>{item.data.title}</h5>
+                <h5><ReactMarkdown children={item.data.title}></ReactMarkdown></h5>
            { (item.data.media !== null && item.data.media.hasOwnProperty('reddit_video')) ? <video controls loop autoPlay>{<source src={`${item.data.secure_media.reddit_video.fallback_url}autoplay=1&muted=1`} />}</video> 
             :
             (typeof item.data.preview ==='object' && item.data.preview.hasOwnProperty('reddit_video_preview')) ? <video autoPlay loop controls>{<source src={`${item.data.preview.reddit_video_preview.fallback_url}`} type='video/mp4' />}</video>

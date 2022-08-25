@@ -100,7 +100,11 @@ function toggleBtn () {
 useEffect(()=> {
   
   if(link === '') {
-    navigate('/')
+    window.onpopstate = () => {
+      
+      navigate('/');
+     
+    }
   }
         // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
