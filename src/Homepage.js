@@ -26,6 +26,7 @@ function Homepage() {
   const [loading, setLoading] = useState(true);
   const blank = useSelector((state)=>state.counter.blank);
   const value = useSelector((state)=>state.counter.value);
+   // eslint-disable-next-line 
   const after = useSelector((state)=>state.counter.afterText);
   const [text, setText] = useState('')
   const redditInfo = useSelector((state)=>state.counter.subbreddit_info);
@@ -39,7 +40,7 @@ function Homepage() {
     setTimeout(()=> {
       
   const loadPost =  async () => {
-      const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after: after, limit: 100}})
+      const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after: text, limit: 100}})
       dispatch(postAdder((response.data.data.children)));
       dispatch(asyncFunction(blank));
       setText(response.data.data.after)
@@ -71,6 +72,7 @@ useEffect(()=> {
       element.style.display = 'none';
     }
   }, true)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
 },[])
 
 function handleScroll () {
