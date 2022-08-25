@@ -26,11 +26,9 @@ function Homepage() {
   const [loading, setLoading] = useState(true);
   const blank = useSelector((state)=>state.counter.blank);
   const value = useSelector((state)=>state.counter.value);
-   // eslint-disable-next-line 
-  const after = useSelector((state)=>state.counter.afterText);
-  const [text, setText] = useState('')
+  const afterText = useSelector((state)=>state.counter.afterText);
   const redditInfo = useSelector((state)=>state.counter.subbreddit_info);
-
+  let array1 = []
   const [truthy, setTruthy] = useState(true)
   const postArray = useSelector((state)=>state.counter.posts);
   const navigate = useNavigate()
@@ -40,11 +38,12 @@ function Homepage() {
     setTimeout(()=> {
       
   const loadPost =  async () => {
-      const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after: text, limit: 100}})
+      const response = await axios.get(`https://www.reddit.com/${blank}.json`, { params: { after: afterText, limit: 100}})
       dispatch(postAdder((response.data.data.children)));
       dispatch(asyncFunction(blank));
-      setText(response.data.data.after)
+      array1.push(response.data.data.after)
       dispatch(resetter());
+      
   }
     loadPost();
     setLoading(false)
@@ -61,8 +60,9 @@ useEffect(()=> {
 
     if(window.scrollY > 300) {
       element.style.display = 'block';
+      
       if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
-        dispatch(afterSetter(text))
+        dispatch(afterSetter(array1[0]))
         setTruthy([]);
        
       }
@@ -141,7 +141,7 @@ function handleScroll () {
                   <span > |</span>
                   <span> {(x===1) ? `${x} hour ago`:(a===1) ? `1 day ago`:(a>1) ? `${a} days ago`: (x===0&&minutes===1) ? '1 minute ago' : (x===0)?`${minutes} minutes ago`: `${x} hours ago`}</span>
                   </p>
-                <h5>{item.data.title}</h5>
+                <h5><ReactMarkdown children={item.data.title}></ReactMarkdown></h5>
                 { (item.data.media !== null && item.data.media.hasOwnProperty('reddit_video')) ? <video controls autoPlay>{<source src={`${item.data.secure_media.reddit_video.fallback_url}autoplay=1&muted=1`} />}</video> 
             :
             (typeof item.data.preview ==='object' && item.data.preview.hasOwnProperty('reddit_video_preview')) ? <video autoPlay controls>{<source src={`${item.data.preview.reddit_video_preview.fallback_url}`} type='video/mp4' />}</video>
