@@ -412,7 +412,7 @@ video {
     margin: 0 auto
   }
   video {
-    width: 90% !important;
+    width: 95% !important;
     margin: 0 auto !important
   }
  
@@ -428,6 +428,7 @@ video {
    border: none;
    margin: 1rem
  }
+ 
 .reddit-info {
   display: none
 }
@@ -438,8 +439,11 @@ video {
   left: 43%;
   top: -80px
 }
+.post-replies {
+  width: 90%
+}
 .replies-post{
-  width: 100%
+  width: 90%
 }
 .mobile-header {
   position: absolute;
